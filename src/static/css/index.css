@@ -1,0 +1,149 @@
+.card {
+    width: calc(100% / 15 - 20px);
+    margin-right: 0.1rem;
+    height: 10rem;
+    display: inline-block;
+    border-radius: 5px;
+    box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
+    padding: 5px;
+    float: left;
+    clear: none;
+    box-sizing: border-box;
+}
+
+.custom-text {
+    text-align: center;
+    padding: 20px;
+    position: absolute;
+    top: 7%;
+    right: 11%;
+    max-width: 400px;
+    color: #000;
+}
+
+.overlay {
+    position: absolute;
+    top: 22%;
+    right: 8%;
+    width: 27%;
+    height: 43%;
+    background-color: rgba(255, 255, 255, 0.3);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+#weatherDetails table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 10px;
+}
+
+#weatherDetails th, #weatherDetails td {
+    border: 1px solid #ccc;
+    padding: 8px;
+    text-align: left;
+}
+
+#weatherDetails th {
+    background-color: #f2f2f2;
+}
+
+#weatherDetails tr:nth-child(even) {
+    background-color: #f2f2f2;
+}
+
+#weatherDetails tr:hover {
+    background-color: #ddd;
+}
+
+.selected {
+    border: 2px solid green;
+    box-shadow: 0 0 5px rgba(0, 0, 255, 0.5);
+}
+
+.header {
+    background-color: #f0f0f0;
+    padding: 10px;
+    border-bottom: 1px solid #ccc;
+    display: flex;
+    align-items: center;
+}
+
+#citySelect {
+    margin-left: 10px;
+    padding: 5px;
+    border-radius: 5px;
+    border: 1px solid #ccc;
+}
+
+#hourDetal {
+    margin-left: auto;
+    margin-right: 10px;
+}
+
+label {
+    margin-right: 5px;
+    font-weight: bold;
+}
+
+.toggle-pill-dark input[type="checkbox"] {
+    display: none;
+}
+
+.toggle-pill-dark input[type="checkbox"] + label {
+    display: flex;
+    align-items: center;
+    position: relative;
+    white-space: nowrap;
+    width: 3em;
+    height: 1.6em;
+    margin-bottom: 20px;
+    margin-top: 20px;
+    border-radius: 1em;
+    background: #303e58;
+    box-shadow: inset 0px 0px 5px rgba(0, 0, 0, 0.3);
+    cursor: pointer;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    -webkit-transition: background 0.1s ease-in-out;
+    transition: background 0.1s ease-in-out;
+}
+
+.toggle-pill-dark input[type="checkbox"] + label:before {
+    content: "";
+    display: block;
+    width: 1.2em;
+    height: 1.2em;
+    border-radius: 1em;
+    background: #e84d4d;
+    position: absolute;
+    left: 0.2em;
+    top: 0.2em;
+    -webkit-transition: all 0.2s ease-in-out;
+    transition: all 0.2s ease-in-out;
+    -webkit-transform: rotate(90deg);
+    transform: rotate(90deg);
+}
+
+.toggle-pill-dark input[type="checkbox"]:checked + label:before {
+    background: #47cf73;
+    box-shadow: -2px 0px 5px rgba(0, 0, 0, 0.2);
+    left: 1.6em;
+    -webkit-transform: rotate(295deg);
+    transform: rotate(295deg);
+}
+
+.toggle-pill-dark input[type="checkbox"] + label span {
+    margin-left: 60px;
+}
+
+.weather-details {
+    display: flex;
+    align-items: center;
+}
+
+.weather-info {
+    margin-left: 20px;
+}

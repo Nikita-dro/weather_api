@@ -1,8 +1,8 @@
 let data = [];
 let selectedDayIndex = 0;
 
-async function fetchData(){
-    let url = "https://weather.visualcrossing.com/VisualCrossingWebServices/rest/services/timeline/Dnipro?unitGroup=metric&key=PPFC9J4MASSRFC6H2VMJDDS9X&contentType=json&lang=uk"
+async function fetchData(location){
+    let url = "https://weather.visualcrossing.com/VisualCrossingWebServices/rest/services/timeline/"+ location + "?unitGroup=metric&key=PPFC9J4MASSRFC6H2VMJDDS9X&contentType=json&lang=uk"
     let response = await fetch(url);
     data = await response.json();
     processData(data);
@@ -31,7 +31,7 @@ function processData(data){
 }
 
 function updateWeatherDetails(dayIndex) {
-
+    let iconDir = "static/img/4th Set - Color/";
     let cards = document.querySelectorAll('.card');
     cards.forEach(card => {
         card.classList.remove('selected');
@@ -42,30 +42,72 @@ function updateWeatherDetails(dayIndex) {
 
     selectedDayIndex = dayIndex;
     let selectedDay = data.days[dayIndex];
-    let detailsHtml = '<table id="weatherTable">';
-    detailsHtml += '<tr>';
-    detailsHtml += '<th>Час</th>';
-    detailsHtml += '<th>Температура</th>';
-    detailsHtml += '<th>Відчувається як</th>';
-    detailsHtml += '<th>Тиск</th>';
-    detailsHtml += '<th>Вологість, %</th>';
-    detailsHtml += '<th>Швидкість вітру</th>';
-    detailsHtml += '</tr>';
-
-    for (let hour of selectedDay.hours) {
+    let hd = document.getElementById("hourDetal");
+    let detailsHtml = ''
+    if (hd.checked){
+        detailsHtml += '<table id="weatherTable">';
         detailsHtml += '<tr>';
-        detailsHtml += '<td>' + hour.datetime + '</td>';
-        detailsHtml += '<td>' + hour.temp + '°</td>';
-        detailsHtml += '<td>' + hour.feelslike + '°</td>';
-        detailsHtml += '<td>' + hour.pressure + '</td>';
-        detailsHtml += '<td>' + hour.humidity + '</td>';
-        detailsHtml += '<td>' + hour.windspeed + '</td>';
+        detailsHtml += '<th>Час</th>';
+        detailsHtml += '<th>Температура</th>';
+        detailsHtml += '<th>Відчувається як</th>';
+        detailsHtml += '<th>Тиск</th>';
+        detailsHtml += '<th>Вологість, %</th>';
+        detailsHtml += '<th>Швидкість вітру</th>';
         detailsHtml += '</tr>';
+
+        for (let hour of selectedDay.hours) {
+            detailsHtml += '<tr>';
+            detailsHtml += '<td>' + hour.datetime + '</td>';
+            detailsHtml += '<td>' + hour.temp + '°</td>';
+            detailsHtml += '<td>' + hour.feelslike + '°</td>';
+            detailsHtml += '<td>' + hour.pressure + '</td>';
+            detailsHtml += '<td>' + hour.humidity + '</td>';
+            detailsHtml += '<td>' + hour.windspeed + '</td>';
+            detailsHtml += '</tr>';
+        }
+        detailsHtml += '</table>';
     }
-    detailsHtml += '</table>';
+    else {
+        detailsHtml += "<hr>";
+        detailsHtml += '<div class="weather-details" style="margin-left: 20px;">';
+        detailsHtml += '<img src = "' + iconDir + selectedDay.icon + '.svg" width = "150px"><br>';
+        detailsHtml += '<div class="weather-info" style="margin-bottom: 20px;">'
+        detailsHtml += "Температура: від " + selectedDay.tempmin + "°C до ";
+        detailsHtml += selectedDay.tempmax + "°C<br>";
+        detailsHtml += "Вологість: " + selectedDay.humidity + "%<br>";
+        detailsHtml += "Швидкість вітру: " + selectedDay.windspeed + " км/год<br>";
+        detailsHtml += "Схід сонця: " + selectedDay.sunrise + "<br>";
+        detailsHtml += "Захід сонця: " + selectedDay.sunset + "<br>";
+        detailsHtml += "<b>" + selectedDay.description + "</b>";
+        detailsHtml += '</div></div>';
+    }
     document.getElementById("weatherDetails").innerHTML = detailsHtml;
 }
 
 document.addEventListener("DOMContentLoaded", function() {
-    fetchData();
+    var hourDetailCheckbox = document.getElementById('hourDetal');
+    hourDetailCheckbox.checked = false;
+    document.getElementById('citySelect').value = "ukraine";
+    fetchData('ukraine');
+});
+
+function updateCityDescription(cityName) {
+    document.getElementById('selectedCity').textContent = cityName;
+}
+
+document.getElementById('citySelect').addEventListener('change', function() {
+    let selectedLocation = this.value;
+    var selectedOption = this.options[this.selectedIndex];
+    var selectedCityName = selectedOption.textContent;
+    fetchData(selectedLocation);
+    if (selectedCityName == "..."){
+        updateCityDescription("Україна (Київ)");
+    }
+    else{
+        updateCityDescription(selectedCityName);
+    }
+});
+
+document.getElementById('hourDetal').addEventListener('change', function() {
+    updateWeatherDetails(selectedDayIndex);
 });
