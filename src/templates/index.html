@@ -6,20 +6,8 @@
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <title>Прогноз погоди</title>
         <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+        <link rel="stylesheet" href="{% static 'css/index.css' %}">
         <style>
-            .card {
-                width: calc(100% / 15 - 20px);
-                margin-right: 0.1rem;
-                height: 10rem;
-                display: inline-block;
-                border-radius: 5px;
-                box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
-                padding: 5px;
-                float: left;
-                clear: none;
-                box-sizing: border-box;
-            }
-
             .custom-bg {
                 background: url("{% static 'img/index_weather.png' %}") center center no-repeat;
                 background-size: cover;
@@ -28,60 +16,26 @@
                 justify-content: flex-end;
                 height: 60vh;
             }
-
-            .custom-text {
-                text-align: center;
-                padding: 20px;
-                position: absolute;
-                top: 7%;
-                right: 11%;
-                max-width: 400px;
-                color: #000;
-            }
-
-            .overlay {
-                position: absolute;
-                top: 22%;
-                right: 8%;
-                width: 27%;
-                height: 43%;
-                background-color: rgba(255, 255, 255, 0.3);
-                display: flex;
-                align-items: center;
-                justify-content: center;
-            }
-
-            #weatherDetails table {
-                width: 100%;
-                border-collapse: collapse;
-                margin-top: 10px;
-            }
-
-            #weatherDetails th, #weatherDetails td {
-                border: 1px solid #ccc;
-                padding: 8px;
-                text-align: left;
-            }
-
-            #weatherDetails th {
-                background-color: #f2f2f2;
-            }
-
-            #weatherDetails tr:nth-child(even) {
-                background-color: #f2f2f2;
-            }
-
-            #weatherDetails tr:hover {
-                background-color: #ddd;
-            }
-
-            .selected {
-                border: 2px solid green;
-                box-shadow: 0 0 5px rgba(0, 0, 255, 0.5);
-            }
         </style>
     </head>
     <body>
+        <header class="header py-1">
+            <label for = "citySelect" style="margin-top: 6px; margin-left: 10px;">Оберіть локацію: </label>
+            <select id = "citySelect">
+                <option value = "ukraine">...</option>
+                <option value = "dnipro">Дніпро</option>
+                <option value = "kyiv">Київ</option>
+                <option value = "poltava">Полтава</option>
+                <option value = "odesa">Одеса</option>
+                <option value = "l'viv">Львів</option>
+            </select>
+            <div class="item">
+              <div class="toggle-pill-dark" style="margin-left: 1390px;">
+                <input type="checkbox" id="hourDetal" name="check">
+                  <label for="hourDetal" class="checkbox-label"><span>Погодинна деталізація</span></label>
+              </div>
+            </div>
+        </header>
         <div class="position-relative overflow-hidden p-3 p-md-5 m-md-3 text-center custom-bg">
             <div class="overlay"></div>
             <div class="text-container">
@@ -90,7 +44,7 @@
                         style="font-weight: bold; font-family: Amiri, Georgia, 'Times New Roman', serif;">Прогноз погоди</h1>
                     <p class="lead fw-normal"
                        style="font-weight: normal; color: #FFFFFF; font-family: Amiri, Georgia, 'Times New Roman', serif;">
-                        Ідеально точно показує погоду у місті - Дніпро!</p>
+                        Ідеально точно показує погоду у місті - <span id="selectedCity">Україна</span>!</p>
                 </div>
             </div>
             <div class="product-device shadow-sm d-none d-md-block"></div>
